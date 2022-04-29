@@ -47,6 +47,7 @@ void testStream(std::string filename)
     farmingdale::queue<std::string> queue1;
     farmingdale::queue<std::string> queue2;
     farmingdale::queue<std::string> queue3;
+    //std::queue<std::string> queue3;
     farmingdale::queue<std::string> queue4;
 
     //initialize statusCode variables to compare cases
