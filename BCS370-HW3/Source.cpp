@@ -2,6 +2,7 @@
 #include <fstream>
 #include <random>
 #include "farmingdaleDynamicContiguousMemoryQueue.h"
+#include <queue>
 
 using namespace std;
 
@@ -46,29 +47,30 @@ void testStream(std::string filename)
     //create four instances of the farmingdale::queue ADT holding std::strings. 
     farmingdale::queue<std::string> queue1;
     farmingdale::queue<std::string> queue2;
-    farmingdale::queue<std::string> queue3;
-    //std::queue<std::string> queue3;
+        //farmingdale::queue<std::string> queue3;
     farmingdale::queue<std::string> queue4;
+    //for queue3, replace farmingdale::queue w/ std::queue
+    std::queue<std::string> queue3;
 
-    //initialize statusCode variables to compare cases
+    //declare statusCode variables to compare cases
     farmingdale::statusCode statusCodeQueue1;
     farmingdale::statusCode statusCodeQueue2;
     farmingdale::statusCode statusCodeQueue3;
     farmingdale::statusCode statusCodeQueue4;
 
-    //initalize peekValue variables to compare cases
+    //declare peekValue variables to compare cases
     std::string peekValue1;
     std::string peekValue2;
     std::string peekValue3;
     std::string peekValue4;
 
-    //initalize dequeueValue variables to compare cases
+    //declare dequeueValue variables to compare cases
     std::string dequeueValue1;
     std::string dequeueValue2;
     std::string dequeueValue3;
     std::string dequeueValue4;
 
-    //initialize isEmpty bools to compare cases
+    //declare isEmpty bools to compare cases
     bool queueIsEmpty1;
     bool queueIsEmpty2;
     bool queueIsEmpty3;
@@ -96,8 +98,12 @@ void testStream(std::string filename)
                 //enqueue() number into all of the queues and return status codes
                 statusCodeQueue1 = queue1.enqueue(fileLine);
                 statusCodeQueue2 = queue2.enqueue(fileLine);
-                statusCodeQueue3 = queue3.enqueue(fileLine);
+                    //statusCodeQueue2 = queue3.enqueue(fileLine);
                 statusCodeQueue4 = queue4.enqueue(fileLine);
+                //for queue3, replace farmingdale::queue w/ std::queue
+                queue3.push(fileLine);
+                statusCodeQueue3 = farmingdale::SUCCESS;
+                
 
                 /*
                 It must check the return value of the enqueue() operations.
@@ -125,8 +131,17 @@ void testStream(std::string filename)
                 //peek() the queues
                 statusCodeQueue1 = queue1.peek(peekValue1);
                 statusCodeQueue2 = queue2.peek(peekValue2);
-                statusCodeQueue3 = queue3.peek(peekValue3);
+                    //statusCodeQueue3 = queue3.peek(peekValue3);
                 statusCodeQueue4 = queue4.peek(peekValue4);
+                //for queue3, replace farmingdale::queue w/ std::queue
+                if (queue3.empty()) {
+                    statusCodeQueue3 = farmingdale::FAILURE;
+                }
+                else {
+                    peekValue3 = queue3.front();
+                    statusCodeQueue3 = farmingdale::SUCCESS;
+                }
+                
 
                 /*
                 It must check the return value of the peek()operations.
@@ -167,8 +182,17 @@ void testStream(std::string filename)
                 //dequeue() all the queues
                 statusCodeQueue1 = queue1.dequeue(dequeueValue1);
                 statusCodeQueue2 = queue2.dequeue(dequeueValue2);
-                statusCodeQueue3 = queue3.dequeue(dequeueValue3);
+                    //statusCodeQueue3 = queue3.dequeue(dequeueValue3);
                 statusCodeQueue4 = queue4.dequeue(dequeueValue4);
+                //for queue3, replace farmingdale::queue w/ std::queue
+                if (queue3.empty()) {
+                    statusCodeQueue3 = farmingdale::FAILURE;
+                }
+                else {
+                    dequeueValue3 = queue3.front();
+                    queue3.pop();
+                    statusCodeQueue3 = farmingdale::SUCCESS;
+                }
 
                 /*
                 It must check the return value of the dequeue()operations.
@@ -208,8 +232,10 @@ void testStream(std::string filename)
                 //should check if the queues are empty
                 queueIsEmpty1 = queue1.isEmpty();
                 queueIsEmpty2 = queue2.isEmpty();
-                queueIsEmpty3 = queue3.isEmpty();
+                    //queueIsEmpty3 = queue3.isEmpty();
                 queueIsEmpty4 = queue4.isEmpty();
+                //for queue3, replace farmingdale::queue w/ std::queue
+                queueIsEmpty3 = queue3.empty();
 
                 /*
                 It should run isEmpty() on all queues

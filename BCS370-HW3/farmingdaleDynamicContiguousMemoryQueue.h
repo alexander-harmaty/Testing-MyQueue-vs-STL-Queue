@@ -131,9 +131,6 @@ template <class CL> inline std::ostream& operator<<(std::ostream& theStream, far
 template <class CL> inline bool operator!=(const farmingdale::queue<CL>& lhs, const farmingdale::queue<CL>& rhs) {
 	return (!(lhs == rhs));
 }
-
-
-
 template <class CL> farmingdale::queue<CL>::queue()
 //set oldest and nextInsert to 0
 //Initialization list
@@ -144,7 +141,6 @@ template <class CL> farmingdale::queue<CL>::queue()
 {
 	data = new CL[currentCapacity];
 }
-
 template <class CL> farmingdale::queue<CL>::queue(const queue<CL>& copyMe)
 	:
 	//Step 1 : Copy oldest index from copyMe 
@@ -163,7 +159,6 @@ template <class CL> farmingdale::queue<CL>::queue(const queue<CL>& copyMe)
 		data[i] = copyMe.data[i];
 	}
 }
-
 template <class CL> farmingdale::statusCode farmingdale::queue<CL>::dequeue(CL& removedValue) {
 	//Step 1: check if empty if so return failure
 	if (isEmpty())
@@ -178,7 +173,6 @@ template <class CL> farmingdale::statusCode farmingdale::queue<CL>::dequeue(CL& 
 	//Step 4: Return Success
 	return farmingdale::SUCCESS;
 }
-
 template <class CL> farmingdale::statusCode farmingdale::queue<CL>::peek(CL& retrievedValue) const {
 
 	//Step 1: check if empty if so return failure
@@ -191,7 +185,6 @@ template <class CL> farmingdale::statusCode farmingdale::queue<CL>::peek(CL& ret
 	//Step 3: Return Success
 	return farmingdale::SUCCESS;
 }
-
 template <class CL> farmingdale::statusCode farmingdale::queue<CL>::enqueue(CL addMe) {
 	//Step 1: Check if queue is full, if so, grow the queue as follows....
 
@@ -231,7 +224,6 @@ template <class CL> farmingdale::statusCode farmingdale::queue<CL>::enqueue(CL a
 	return farmingdale::SUCCESS;
 
 }
-
 template <class CL> bool farmingdale::queue<CL>::operator==(const queue<CL>& otherQueue) const {
 	int myIterator = oldestIndex;
 	int otherIterator = otherQueue.oldestIndex;
@@ -249,7 +241,6 @@ template <class CL> bool farmingdale::queue<CL>::operator==(const queue<CL>& oth
 	}
 	return true;
 }
-
 template <class CL> void farmingdale::queue<CL>::printToStream(std::ostream& theStream) {
 	theStream << "(oldest)";
 	for (int i = oldestIndex; i != nextInsertIndex; i = nextIndexOf(i)) {
@@ -260,10 +251,11 @@ template <class CL> void farmingdale::queue<CL>::printToStream(std::ostream& the
 	}
 	theStream << "(newest)";
 }
-
 template <class CL> farmingdale::queue<CL>::~queue() {
 	delete[] data;
 }
+
+
 
 #endif // TEMPLATED_QUEUE
 
